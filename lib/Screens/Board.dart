@@ -17,10 +17,10 @@ class _BoardState extends State<Board> {
 
   @override
   Widget build(BuildContext context) {
-//    if(values == null){
-//      values = List<CellValue>();
-//      getData();
-//    }
+    if(values == null){
+      values = List<CellValue>();
+      getData();
+    }
     var size = MediaQuery.of(context).size;
 
     final double itemHeight = (size.height - kToolbarHeight - 24) / 2;
@@ -48,14 +48,14 @@ class _BoardState extends State<Board> {
 // Get grid tiles
   List<Widget> _getTiles() {
     final List<Widget> tiles = <Widget>[];
-    for (int i = 1; i <= 25; i++) {
+    for (int i = 0; i <= 24; i++) {
       tiles.add(new Container(
           decoration: new BoxDecoration(
               border: new Border.all(color: Colors.blueAccent)),
           child: new GridTile(
             child: new InkResponse(
               enableFeedback: true,
-              child: new Center(child: Text(i.toString())),//values[i].value)),
+              child: new Center(child: Text(values[i].value)),
               onTap: () => _onTileClicked(i),
             ),
           )));

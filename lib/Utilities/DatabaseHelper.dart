@@ -28,7 +28,7 @@ class DatabaseHelper {
 
   Future<Database> initializeDb() async {
     Directory dir = await getApplicationDocumentsDirectory();
-    String path = dir.path + "values.db";
+    String path = dir.path + "/databases/values.db";
     var dbValues = await openDatabase(path, version: 1, onCreate: _createDb);
     return dbValues;
   }
@@ -41,7 +41,8 @@ class DatabaseHelper {
                   "Green Lantern", "Flash", "Power Ranger", "Link", "Finn", "Harry Potter", "Poison Ivy", "Joker"];
 
     for(int i = 0; i < values.length; i++) {
-      await db.execute("INSERT INTO $tblCellValues ($colValue) VALUES (" + values[i] + ")");
+      var valueToInsert = "INSERT INTO $tblCellValues ($colValue) VALUES ('" + values[i] + "')";
+      await db.execute(valueToInsert);
     }
   }
 
