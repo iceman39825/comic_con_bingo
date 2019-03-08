@@ -11,8 +11,22 @@ class ComicConBingo extends StatelessWidget {
       theme: new ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: new Board(title: 'Comic Con Bingo'),
+      home: GameWrapper(Board(title: 'Comic Con Bingo')),
     );
+  }
+}
+
+class GameWrapper extends StatelessWidget{
+  Board board;
+  GameWrapper(this.board);
+  @override
+  Widget build(BuildContext context){
+    return board;
+  }
+
+  restart()
+  {
+    board = new Board(title: 'Comic Con Bingo');
   }
 }
 

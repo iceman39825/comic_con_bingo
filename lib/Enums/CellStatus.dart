@@ -1,0 +1,5 @@
+enum CellStatus{
+  NOT_SELECTED,
+  SELECTED,
+  COMPLETED_A_LINE
+}
