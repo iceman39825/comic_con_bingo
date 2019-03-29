@@ -1,3 +1,4 @@
+import 'package:comic_con_bingo/main.dart' as Absolute;
 import 'package:flutter/material.dart';
 
 class Dialogs{
@@ -34,12 +35,25 @@ class Dialogs{
                     child: Text("No")
                 ),
                 FlatButton(
-                    onPressed: () => Navigator.pop(context),
+                    onPressed: () => restart(context),
                     child: Text("Yes")
                 ),
               ]
           );
         }
     );
+  }
+
+  restart(BuildContext context)
+  {
+    Absolute.RestartWidget.restartApp(context);
+//    runApp(new MaterialApp(
+//        title: 'Comic Con Bingo',
+//        theme: new ThemeData(
+//          primarySwatch: Colors.blue,
+//        ),
+//        home: Board(title: 'Comic Con Bingo')
+//    )
+//    );
   }
 }

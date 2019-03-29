@@ -41,7 +41,26 @@ class _BoardState extends State<Board> {
         title: new Text(widget.title),
         ),
     backgroundColor: Colors.black,
-    body: tiles()
+    body: new GridView.builder( itemCount: count,
+        gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: columnCount, childAspectRatio: (itemWidth / itemHeight), mainAxisSpacing: 4.0, crossAxisSpacing: 4.0),
+    padding: const EdgeInsets.all(4.0),
+itemBuilder: (BuildContext context, int position) {
+  return new Container(
+      decoration: new BoxDecoration(
+          border: new Border.all(color: Colors.blueAccent)),
+      child: new GridTile(
+        child: new InkResponse(
+          enableFeedback: true,
+          child: new Center(child: new Text(
+            cells[position].value, textAlign: TextAlign.center,
+            style: new TextStyle(
+                color: cells[position].color, fontSize: 19.0),),),
+          onTap: () => _onTileClicked(position),
+        ),
+      )
+  );
+//    tiles()
+})
     );
   }
 
@@ -56,25 +75,25 @@ class _BoardState extends State<Board> {
   }
 
 // Get grid tiles
-  GridView tiles() {
-  return GridView.builder(itemCount: count,
-      gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: columnCount, childAspectRatio: (itemWidth / itemHeight), mainAxisSpacing: 4.0, crossAxisSpacing: 4.0),
-      padding: const EdgeInsets.all(4.0),
-      itemBuilder: (BuildContext context, int position){
-    return Container(
-      decoration: new BoxDecoration(
-              border: new Border.all(color: Colors.blueAccent)),
-          child: new GridTile(
-            child: new InkResponse(
-              enableFeedback: true,
-              child: new Center(child: new Text(cells[position].value, textAlign: TextAlign.center, style: new TextStyle(color: cells[position].color, fontSize: 19.0),),),
-              onTap: () => _onTileClicked(position),
-            ),
-    )
-    );
-  }
-  );
-  }
+//  GridView tiles() {
+//  return GridView.builder(itemCount: count,
+//      gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: columnCount, childAspectRatio: (itemWidth / itemHeight), mainAxisSpacing: 4.0, crossAxisSpacing: 4.0),
+//      padding: const EdgeInsets.all(4.0),
+//      itemBuilder: (BuildContext context, int position){
+//    return Container(
+//      decoration: new BoxDecoration(
+//              border: new Border.all(color: Colors.blueAccent)),
+//          child: new GridTile(
+//            child: new InkResponse(
+//              enableFeedback: true,
+//              child: new Center(child: new Text(cells[position].value, textAlign: TextAlign.center, style: new TextStyle(color: cells[position].color, fontSize: 19.0),),),
+//              onTap: () => _onTileClicked(position),
+//            ),
+//    )
+//    );
+//  }
+//  );
+//  }
 
   void getData() {
     final dbFuture = dbHelper.initializeDb();
@@ -83,7 +102,6 @@ class _BoardState extends State<Board> {
       valuesFuture.then((result){
         List<Cell> cellsList = List<Cell>();
         int resultCount = result.length;
-        debugPrint("resultCount: " + resultCount.toString());
         for(int i = 0; i < resultCount; i++) {
           cellsList.add(Cell.fromObject(result[i]));
         }
@@ -95,10 +113,8 @@ class _BoardState extends State<Board> {
         setState(() {
           cells = shuffledCells;
           count = rowCount * columnCount;
-          debugPrint("I'm a count: " + count.toString());
         });
 
-        debugPrint("Items " + count.toString());
       });
     });
   }

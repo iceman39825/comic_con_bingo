@@ -1,50 +1,53 @@
 import 'package:flutter/material.dart';
 import 'package:comic_con_bingo/Screens/Board.dart';
 
-void main() => runApp(new ComicConBingo());
+void main() => runApp(new RestartWidget(
+  child: new MaterialApp(
+    title: 'Comic Con Bingo',
+    theme: new ThemeData(
+      primarySwatch: Colors.blue,),
+    home: Board(title: 'Comic Con Bingo'),
+  ),
+  )
+);
 
-class ComicConBingo extends StatelessWidget {
+class RestartWidget extends StatefulWidget {
+  final Widget child;
+  RestartWidget({this.child});
+
+  static restartApp(BuildContext context) {
+//    final RestartWidgetState state =
+//    context.ancestorStateOfType(const TypeMatcher<RestartWidgetState>());
+//    debugPrint("I'm a state: " + state.toString());
+//    state.restartApp();
+      runApp(new RestartWidget(
+        child: new MaterialApp(
+          title: 'Comic Con Bingo',
+          theme: new ThemeData(
+            primarySwatch: Colors.blue,),
+          home: Board(title: 'Comic Con Bingo'),
+        ),
+      ));
+  }
+
+  @override
+  RestartWidgetState createState() => new RestartWidgetState();
+}
+
+class RestartWidgetState extends State<RestartWidget> {
+  Key key = new GlobalKey();
+//
+//  void restartApp() {
+//    this.setState(() {
+//      key = new UniqueKey();
+//    });
+//  }
+
   @override
   Widget build(BuildContext context) {
-    return new MaterialApp(
-      title: 'Comic Con Bingo',
-      theme: new ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: GameWrapper(Board(title: 'Comic Con Bingo')),
+    return new Container(
+      key: key,
+      child: widget.child,
     );
   }
 }
-
-class GameWrapper extends StatelessWidget{
-  Board board;
-  GameWrapper(this.board);
-  @override
-  Widget build(BuildContext context){
-    return board;
-  }
-
-  restart()
-  {
-    board = new Board(title: 'Comic Con Bingo');
-  }
-}
-
-class ComicConBingoPage extends StatefulWidget {
-  ComicConBingoPage({Key key, this.title}) : super(key : key);
-
-  final String title;
-
-  @override
-  _ComicConBingoPageState createState() => new _ComicConBingoPageState();
-}
-
-class _ComicConBingoPageState extends State<ComicConBingoPage> {
-  @override
-  Widget build(BuildContext context) {
-    return new Scaffold(
-      body: Board(),
-    );
-  }
-}
-
